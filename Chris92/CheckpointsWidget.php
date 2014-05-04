@@ -27,7 +27,7 @@ class CheckpointsPlugin implements CallbackListener, Plugin {
      * Constants
      */
     const PLUGIN_ID     = 20;
-    const PLUGIN_VERSION = 1.01;
+    const PLUGIN_VERSION = 1.02;
     const PLUGIN_NAME = 'CheckpointsWidget';
     const PLUGIN_AUTHOR = 'Chris92';
 
@@ -205,9 +205,9 @@ class CheckpointsPlugin implements CallbackListener, Plugin {
     /**
      * Handle on Begin Map
      *
-     * @param array $callback
+     * @param Map $map
      */
-    public function handleOnBeginMap(array $callback) {
+    public function handleOnBeginMap(Map $map) {
         // Display Map Widget
         if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_CP_WIDGET_ACTIVATED)) {
             $this->displayCPWidget();

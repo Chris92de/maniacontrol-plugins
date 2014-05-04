@@ -36,6 +36,9 @@ Features planned for v2.0:
 - show time difference for next best record (LocalRecords and Dedimania supported)
 - Customizable widget style
 
+v1.02:
+- Fixed some more callback parameters
+
 v1.01:
 - Fixed callback parameters for function 'handleOnEndMap'
 
