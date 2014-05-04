@@ -31,7 +31,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.14;
+    const PLUGIN_VERSION = 1.15;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -166,7 +166,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         } else {
             foreach($this->maniaControl->playerManager->getPlayers() as $player) {
                 $this->buildManialink($player);
-				if(!$this->maniaControl->pluginManager->getPlugin('Dedimania\Dedimania') || $this->maniaControl->pluginManager->getPlugin('Dedimania\Dedimania')->getDedimaniaRecords() != false) {
+				if(!$this->maniaControl->pluginManager->getPlugin('MCTeam\Dedimania\DedimaniaPlugin') || $this->maniaControl->pluginManager->getPlugin('MCTeam\Dedimania\DedimaniaPlugin')->getDedimaniaRecords() != false) {
                 	$this->buildManialink($player, true);
 				}
             }
@@ -185,8 +185,8 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
     }
 
 	public function drawDedimaniaRecords() {
-		/** @var \Dedimania\Dedimania $dediRecordsPlugin */
-		$dediRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('Dedimania\Dedimania');
+		/** @var \MCTeam\Dedimania\DedimaniaPlugin $dediRecordsPlugin */
+		$dediRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\Dedimania\DedimaniaPlugin');
 		if(!$dediRecordsPlugin) return;
 
 		$records = $dediRecordsPlugin->getDedimaniaRecords();
@@ -276,8 +276,8 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 		$lineHeight   = 4.;
 
 		if($dedi) {
-			/** @var \Dedimania\Dedimania $dediRecordsPlugin */
-			$dediRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('Dedimania\Dedimania');
+			/** @var \MCTeam\Dedimania\DedimaniaPlugin $dediRecordsPlugin */
+			$dediRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\Dedimania\DedimaniaPlugin');
 			if(!$dediRecordsPlugin) return;
 			$title        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_TITLE);
 			$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_POSX);

@@ -9,8 +9,8 @@ Use the ingame plugin installer instead.
 -> List of plugins
 -------------------------------------------------------------------------------------------------
 
-- [BWS\InfoWidgets](http://maniacontrol.com/plugins/36) - Version 1.03
-- [BWS\RecordsWidgets](http://maniacontrol.com/plugins/32) - Version 1.14
+- [BWP\InfoWidgets](http://maniacontrol.com/plugins/36) - Version 1.03
+- [BWP\RecordsWidgets](http://maniacontrol.com/plugins/32) - Version 1.15
 - [Chris92\CheckpointsWidget](http://maniacontrol.com/plugins/20) - Version 1.02
 - [Chris92\CustomizeQuitMessage](http://maniacontrol.com/plugins/31) - Version 0.1
 
