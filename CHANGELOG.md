@@ -1,6 +1,5 @@
 -------------------------------------------------------------------------------------------------
 -> BWS\InfoWidgets.php
--------------------------------------------------------------------------------------------------
 
 v1.03:
 + Added namespace BWS to prevent "class could not be re-declared" errors and to adhere ManiaControl plugin conventions
@@ -12,8 +11,8 @@ v1.0:
 - Initial release including ServerInfo, MapInfo, NextMapInfo, KarmaInfo and Clock widget.
 
 -------------------------------------------------------------------------------------------------
--> BWS\RecordsWidgets.php
--------------------------------------------------------------------------------------------------
+BWS\RecordsWidgets.php
+
 
 changelog until v1.14:
 + Added namespace BWS
@@ -30,21 +29,22 @@ v1.0:
 
 -------------------------------------------------------------------------------------------------
 -> Chris92\CheckpointsWidget.php
--------------------------------------------------------------------------------------------------
 
 Features planned for v2.0:
 - show time difference for next best record (LocalRecords and Dedimania supported)
 - Customizable widget style
 
+v1.01:
+- Fixed callback parameters for function 'handleOnEndMap'
+
 v1.0: 
 + Added namespace Chris92
 
 v0.1:
-Initial release
+- Initial release
 
 -------------------------------------------------------------------------------------------------
 -> Chris92\CustomizeQuitScreen.php
--------------------------------------------------------------------------------------------------
 
 Features planned for future versions:
 - Provide a few default layouts to choose from. Advanced users can still use custom option and provide URL to manialink file.
