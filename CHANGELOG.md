@@ -1,5 +1,6 @@
 -------------------------------------------------------------------------------------------------
--> BWS\InfoWidgets.php
+BWS\InfoWidgets.php
+-------------------------------------------------------------------------------------------------
 
 v1.03:
 + Added namespace BWS to prevent "class could not be re-declared" errors and to adhere ManiaControl plugin conventions
@@ -12,7 +13,7 @@ v1.0:
 
 -------------------------------------------------------------------------------------------------
 BWS\RecordsWidgets.php
-
+-------------------------------------------------------------------------------------------------
 
 changelog until v1.14:
 + Added namespace BWS
@@ -28,7 +29,8 @@ v1.0:
 - Initial release
 
 -------------------------------------------------------------------------------------------------
--> Chris92\CheckpointsWidget.php
+Chris92\CheckpointsWidget.php
+-------------------------------------------------------------------------------------------------
 
 Features planned for v2.0:
 - show time difference for next best record (LocalRecords and Dedimania supported)
@@ -44,7 +46,8 @@ v0.1:
 - Initial release
 
 -------------------------------------------------------------------------------------------------
--> Chris92\CustomizeQuitScreen.php
+Chris92\CustomizeQuitScreen.php
+-------------------------------------------------------------------------------------------------
 
 Features planned for future versions:
 - Provide a few default layouts to choose from. Advanced users can still use custom option and provide URL to manialink file.
