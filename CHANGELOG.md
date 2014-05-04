@@ -15,6 +15,9 @@ v1.0:
 BWS\RecordsWidgets.php
 -------------------------------------------------------------------------------------------------
 
+v1.15:
+- Fixed Dedimania not working because namespace changes
+
 changelog until v1.14:
 + Added namespace BWS
 + Added records lists (click either LocalRecords or DedimaniaRecords widget to show a list of all records on current map)
