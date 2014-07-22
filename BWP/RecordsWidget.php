@@ -13,7 +13,7 @@ use ManiaControl\ManiaControl;
 use ManiaControl\Plugins\Plugin;
 use ManiaControl\Callbacks\CallbackListener;
 use ManiaControl\Callbacks\TimerListener;
-use ManiaControl\Formatter;
+use ManiaControl\Utils\Formatter;
 use ManiaControl\Maps\Map;
 use ManiaControl\Maps\MapManager;
 use ManiaControl\Settings\SettingManager;
@@ -31,7 +31,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.15;
+    const PLUGIN_VERSION = 1.16;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -123,6 +123,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
     }
     
     public function unload() {
+		$this->maniaControl->callbackManager->unregisterCallbackListener($this);
         unset($this->maniacontrol);
     }
 

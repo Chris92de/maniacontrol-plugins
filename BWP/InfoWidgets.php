@@ -11,7 +11,7 @@ use FML\Script\Script;
 use ManiaControl\Callbacks\CallbackManager;
 use ManiaControl\Callbacks\CallbackListener;
 use ManiaControl\Callbacks\TimerListener;
-use ManiaControl\Formatter;
+use ManiaControl\Utils\Formatter;
 use ManiaControl\ManiaControl;
 use ManiaControl\Manialinks\IconManager;
 use ManiaControl\Maps\Map;
@@ -34,7 +34,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * Constants
 	 */
 	const PLUGIN_ID      = 36;
-	const PLUGIN_VERSION = 1.03;
+	const PLUGIN_VERSION = 1.04;
 	const PLUGIN_NAME    = 'InfoWidgets';
 	const PLUGIN_AUTHOR  = 'Chris92 & TheM & Kremsy';
 
