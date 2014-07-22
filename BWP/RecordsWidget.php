@@ -123,8 +123,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
     }
     
     public function unload() {
-		$this->maniaControl->callbackManager->unregisterCallbackListener($this);
-        unset($this->maniacontrol);
+
     }
 
 	public function handleLocalRecord($newRecord) {
