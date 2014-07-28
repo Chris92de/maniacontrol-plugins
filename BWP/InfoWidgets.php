@@ -806,7 +806,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 *
 	 * @param Map $map
 	 */
-	public function handleOnBeginMap(Map $map) {
+	public function handleOnBeginMap($map) {
 		// Display Map Widget
 		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
 			$this->displayMapWidget();
@@ -834,7 +834,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 *
 	 * @param Map $map
 	 */
-	public function handleOnEndMap(Map $map) {
+	public function handleOnEndMap($map) {
 		// Display Map Widget
 		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_ACTIVATED)) {
 			$this->displayNextMapWidget();

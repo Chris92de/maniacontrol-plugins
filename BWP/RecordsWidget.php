@@ -201,14 +201,14 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 		}
 	}
 
-	public function handleBeginMap(Map $map) {
+	public function handleBeginMap($map) {
 		$this->blinkRecord = null;
 		$this->blinkDedi = null;
 		$this->updateAllManialinks();
 		$this->maniaControl->timerManager->registerOneTimeListening($this, 'drawDedimaniaRecords', 1000);
 	}
 
-	public function handleEndMap(Map $map) {
+	public function handleEndMap($map) {
 		$this->blinkRecord = null;
 		$this->blinkDedi = null;
 		$this->updateAllManialinks();
