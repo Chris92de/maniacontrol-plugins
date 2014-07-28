@@ -32,7 +32,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.17;
+    const PLUGIN_VERSION = 1.171;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -81,12 +81,13 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         //do nothing
     }
 
-    /**
-     * Load the plugin
-     *
-     * @param ManiaControl $maniaControl
-     * @return bool
-     */
+	/**
+	 * Load the plugin
+	 *
+	 * @param ManiaControl $maniaControl
+	 * @throws \Exception
+	 * @return bool
+	 */
     public function load(ManiaControl $maniaControl) {
         $this->maniaControl = $maniaControl;
         if(!$this->maniaControl->pluginManager->isPluginActive('MCTeam\LocalRecordsPlugin')) {
@@ -118,7 +119,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         $this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_ENDMAP, $this, 'handleEndMap');
         $this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERCONNECT, $this, 'handlePlayerConnect');
         $this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERDISCONNECT, $this, 'handlePlayerDisconnect');
-        $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTINGS_CHANGED, $this, 'handleSettingsChanged');
+        $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTING_CHANGED, $this, 'handleSettingChanged');
 
 		$this->drawOnLoad();
     }
@@ -160,7 +161,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 	}
 
 	public function updateAllManialinks() {
-        if (!$this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_ENABLE)) {
+        if (!$this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_ENABLE)) {
             $emptyml = new Manialink(self::MLID_LOCALS);
             $mltext = $emptyml->render()->saveXML();
             $this->maniaControl->manialinkManager->sendManialink($mltext);
@@ -175,7 +176,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 	}
 
     public function drawOnLoad() {
-        if (!$this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_ENABLE)) {
+        if (!$this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_ENABLE)) {
             $emptyml = new Manialink(self::MLID_LOCALS);
             $mltext = $emptyml->render()->saveXML();
             $this->maniaControl->manialinkManager->sendManialink($mltext);
@@ -223,7 +224,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         $this->updateAllManialinks();
     }
 
-	public function handleSettingsChanged($class, $settingName, $value) {
+	public function handleSettingChanged($class, $settingName) {
 		if (!$class = get_class()) {
 			return;
 		}
@@ -280,23 +281,23 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 			/** @var \MCTeam\Dedimania\DedimaniaPlugin $dediRecordsPlugin */
 			$dediRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\Dedimania\DedimaniaPlugin');
 			if(!$dediRecordsPlugin) return;
-			$title        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_TITLE);
-			$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_POSX);
-			$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_POSY);
-			$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_WIDTH);
-			$lines        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_COUNT);
-			$topcount     = $this->maniaControl->settingManager->getSetting($this, self::SETTING_DEDIS_TOPCOUNT);
+			$title        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_TITLE);
+			$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_POSX);
+			$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_POSY);
+			$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_WIDTH);
+			$lines        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_COUNT);
+			$topcount     = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_DEDIS_TOPCOUNT);
 			$mlid         = self::MLID_DEDIS;
 		} else {
 			/** @var \LocalRecordsPlugin $localRecordsPlugin */
 			$localRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\LocalRecordsPlugin');
 
-			$title        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_TITLE);
-			$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_POSX);
-			$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_POSY);
-			$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_WIDTH);
-			$lines        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_COUNT);
-			$topcount     = $this->maniaControl->settingManager->getSetting($this, self::SETTING_LOCALS_TOPCOUNT);
+			$title        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_TITLE);
+			$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_POSX);
+			$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_POSY);
+			$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_WIDTH);
+			$lines        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_COUNT);
+			$topcount     = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_TOPCOUNT);
 			$mlid         = self::MLID_LOCALS;
 		}
 

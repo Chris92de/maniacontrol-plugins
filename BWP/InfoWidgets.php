@@ -10,6 +10,7 @@ use FML\ManiaLink;
 use FML\Script\Script;
 use ManiaControl\Callbacks\CallbackManager;
 use ManiaControl\Callbacks\CallbackListener;
+use ManiaControl\Callbacks\Callbacks;
 use ManiaControl\Callbacks\TimerListener;
 use ManiaControl\Utils\Formatter;
 use ManiaControl\ManiaControl;
@@ -34,7 +35,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * Constants
 	 */
 	const PLUGIN_ID      = 36;
-	const PLUGIN_VERSION = 1.05;
+	const PLUGIN_VERSION = 1.051;
 	const PLUGIN_NAME    = 'InfoWidgets';
 	const PLUGIN_AUTHOR  = 'Chris92 & TheM & Kremsy';
 
@@ -111,11 +112,11 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 
 		// Register for callbacks
 		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_BEGINMAP, $this, 'handleOnBeginMap');
-		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_AFTERINIT, $this, 'displayWidgets');
+		$this->maniaControl->callbackManager->registerCallbackListener(Callbacks::AFTERINIT, $this, 'displayWidgets');
 		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_ENDMAP, $this, 'handleOnEndMap');
 		$this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERCONNECT, $this, 'handlePlayerConnect');
 		$this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERDISCONNECT, $this, 'handlePlayerDisconnect');
-        $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTINGS_CHANGED, $this, 'handleSettingsChanged');
+        $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTING_CHANGED, $this, 'handleSettingChanged');
 		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_PLAYERMANIALINKPAGEANSWER, $this, 'handleManialinkPageAnswer');
 		$this->maniaControl->callbackManager->registerCallbackListener('KarmaPlugin.Changed', $this, 'updateKarmaWidget');
 		$this->maniaControl->callbackManager->registerCallbackListener('KarmaPlugin.MXUpdated', $this, 'updateMXKarma');
@@ -165,20 +166,20 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	/**
 	 * Displays the Widgets onLoad
 	 *
-	 * @param array $callback
+	 * @internal param array $callback
 	 */
 	public function displayWidgets() {
 		// Display Map Widget
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
 			$this->displayMapWidget();
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_ACTIVATED)) {
 			$this->displayClockWidget();
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
 			$this->displayServerInfoWidget();
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_ACTIVATED) &&
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_ACTIVATED) &&
 			$this->maniaControl->pluginManager->getPlugin('MCTeam\KarmaPlugin') != false) {
 			foreach($this->maniaControl->playerManager->getPlayers() as $player) {
 				$this->displayKarmaWidget($player->login);
@@ -189,13 +190,13 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	/**
 	 * Displays the Map Widget
 	 *
-	 * @param String $login
+	 * @param bool|String $login
 	 */
 	public function displayMapWidget($login = false) {
-		$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_POSX);
-		$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_POSY);
-		$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_WIDTH);
-		$height       = $this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_HEIGHT);
+		$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_POSX);
+		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_POSY);
+		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_WIDTH);
+		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_HEIGHT);
 		$quadStyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
 		$quadSubstyle = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
 		$labelStyle   = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
@@ -343,10 +344,10 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * @param bool $login
 	 */
 	public function displayClockWidget($login = false) {
-		$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_POSX);
-		$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_POSY);
-		$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_WIDTH);
-		$height       = $this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_HEIGHT);
+		$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_POSX);
+		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_POSY);
+		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_WIDTH);
+		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_HEIGHT);
 		$quadStyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
 		$quadSubstyle = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
 
@@ -383,13 +384,13 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	/**
 	 * Displays the Server Info Widget
 	 *
-	 * @param String $login
+	 * @param bool|String $login
 	 */
 	public function displayServerInfoWidget($login = false) {
-		$pos_x           = $this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_POSX);
-		$pos_y           = $this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_POSY);
-		$width           = $this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_WIDTH);
-		$height          = $this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_HEIGHT);
+		$pos_x           = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_POSX);
+		$pos_y           = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_POSY);
+		$width           = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_WIDTH);
+		$height          = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_HEIGHT);
 		$quadStyle       = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
 		$quadSubstyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
         $labelStyle      = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
@@ -554,10 +555,10 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * @param bool|String $login
 	 */
 	public function displayKarmaWidget($login) {
-		$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_POSX);
-		$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_POSY);
-		$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_WIDTH);
-		$height       = $this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_HEIGHT);
+		$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_POSX);
+		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_POSY);
+		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_WIDTH);
+		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_HEIGHT);
 		$labelStyle   = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
 
 		$maniaLink = new ManiaLink(self::MLID_KARMAWIDGET);
@@ -807,10 +808,10 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 */
 	public function handleOnBeginMap(Map $map) {
 		// Display Map Widget
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
 			$this->displayMapWidget();
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_ACTIVATED) && $this->maniaControl->pluginManager->getPlugin('MCTeam\KarmaPlugin') != false) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_ACTIVATED) && $this->maniaControl->pluginManager->getPlugin('MCTeam\KarmaPlugin') != false) {
 			foreach($this->maniaControl->playerManager->getPlayers() as $player) {
 				$this->displayKarmaWidget($player->login);
 			}
@@ -835,7 +836,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 */
 	public function handleOnEndMap(Map $map) {
 		// Display Map Widget
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_NEXTMAP_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_ACTIVATED)) {
 			$this->displayNextMapWidget();
 		}
 	}
@@ -846,10 +847,10 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * @param bool $login
 	 */
 	public function displayNextMapWidget($login = false) {
-		$pos_x        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_NEXTMAP_WIDGET_POSX);
-		$pos_y        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_NEXTMAP_WIDGET_POSY);
-		$width        = $this->maniaControl->settingManager->getSetting($this, self::SETTING_NEXTMAP_WIDGET_WIDTH);
-		$height       = $this->maniaControl->settingManager->getSetting($this, self::SETTING_NEXTMAP_WIDGET_HEIGHT);
+		$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_POSX);
+		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_POSY);
+		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_WIDTH);
+		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_NEXTMAP_WIDGET_HEIGHT);
 		$labelStyle   = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
 
 		$maniaLink = new ManiaLink(self::MLID_NEXTMAPWIDGET);
@@ -981,16 +982,16 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 */
 	public function handlePlayerConnect(Player $player) {
 		// Display Map Widget
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_ACTIVATED)) {
 			$this->displayMapWidget($player->login);
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_CLOCK_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_ACTIVATED)) {
 			$this->displayClockWidget($player->login);
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
 			$this->displayServerInfoWidget();
 		}
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_KARMA_WIDGET_ACTIVATED) &&
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_KARMA_WIDGET_ACTIVATED) &&
 			$this->maniaControl->pluginManager->getPlugin('MCTeam\KarmaPlugin') != false) {
 			$this->displayKarmaWidget($player->login);
 		}
@@ -1001,9 +1002,8 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 *
 	 * @param $class
 	 * @param $settingName
-	 * @param $value
 	 */
-	public function handleSettingsChanged($class, $settingName, $value) {
+	public function handleSettingChanged($class, $settingName) {
         if(!$class = get_class()){
             return;
         }
@@ -1039,7 +1039,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 			              'KarmaWidget-Size: Height');
 
         if (in_array($settingName, $settings)){
-            $this->displayWIdgets();
+            $this->displayWidgets();
         }
     }
 
@@ -1049,7 +1049,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * @param Player $player
 	 */
 	public function handlePlayerDisconnect(Player $player) {
-		if ($this->maniaControl->settingManager->getSetting($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
+		if ($this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_ACTIVATED)) {
 			$this->displayServerInfoWidget();
 		}
 	}
