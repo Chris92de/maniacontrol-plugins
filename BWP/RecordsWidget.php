@@ -9,6 +9,7 @@ use FML\Controls\Quad;
 use FML\Controls\Quads\Quad_Icons128x128_1;
 use FML\Controls\Quads\Quad_BgRaceScore2;
 use FML\ManiaLink;
+use ManiaControl\Callbacks\CallbackManager;
 use ManiaControl\ManiaControl;
 use ManiaControl\Plugins\Plugin;
 use ManiaControl\Callbacks\CallbackListener;
@@ -31,7 +32,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.16;
+    const PLUGIN_VERSION = 1.17;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -113,8 +114,8 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 
         $this->maniaControl->callbackManager->registerCallbackListener('LocalRecords.Changed', $this, 'handleLocalRecord');
         $this->maniaControl->callbackManager->registerCallbackListener('Dedimania.Changed', $this, 'handleDediRecord');
-        $this->maniaControl->callbackManager->registerCallbackListener(MapManager::CB_BEGINMAP, $this, 'handleBeginMap');
-        $this->maniaControl->callbackManager->registerCallbackListener(MapManager::CB_ENDMAP, $this, 'handleEndMap');
+        $this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_BEGINMAP, $this, 'handleBeginMap');
+        $this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_ENDMAP, $this, 'handleEndMap');
         $this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERCONNECT, $this, 'handlePlayerConnect');
         $this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERDISCONNECT, $this, 'handlePlayerDisconnect');
         $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTINGS_CHANGED, $this, 'handleSettingsChanged');

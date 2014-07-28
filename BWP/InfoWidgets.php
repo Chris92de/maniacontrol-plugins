@@ -34,7 +34,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * Constants
 	 */
 	const PLUGIN_ID      = 36;
-	const PLUGIN_VERSION = 1.04;
+	const PLUGIN_VERSION = 1.05;
 	const PLUGIN_NAME    = 'InfoWidgets';
 	const PLUGIN_AUTHOR  = 'Chris92 & TheM & Kremsy';
 
@@ -110,12 +110,12 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$this->maniaControl->manialinkManager->customUIManager->setChallengeInfoVisible(false);
 
 		// Register for callbacks
-		$this->maniaControl->callbackManager->registerCallbackListener(MapManager::CB_BEGINMAP, $this, 'handleOnBeginMap');
+		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_BEGINMAP, $this, 'handleOnBeginMap');
 		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_AFTERINIT, $this, 'displayWidgets');
-		$this->maniaControl->callbackManager->registerCallbackListener(MapManager::CB_ENDMAP, $this, 'handleOnEndMap');
+		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_ENDMAP, $this, 'handleOnEndMap');
 		$this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERCONNECT, $this, 'handlePlayerConnect');
 		$this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERDISCONNECT, $this, 'handlePlayerDisconnect');
-        	$this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTINGS_CHANGED, $this, 'handleSettingsChanged');
+        $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTINGS_CHANGED, $this, 'handleSettingsChanged');
 		$this->maniaControl->callbackManager->registerCallbackListener(CallbackManager::CB_MP_PLAYERMANIALINKPAGEANSWER, $this, 'handleManialinkPageAnswer');
 		$this->maniaControl->callbackManager->registerCallbackListener('KarmaPlugin.Changed', $this, 'updateKarmaWidget');
 		$this->maniaControl->callbackManager->registerCallbackListener('KarmaPlugin.MXUpdated', $this, 'updateMXKarma');
