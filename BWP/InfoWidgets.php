@@ -35,7 +35,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * Constants
 	 */
 	const PLUGIN_ID      = 36;
-	const PLUGIN_VERSION = 1.051;
+	const PLUGIN_VERSION = 1.052;
 	const PLUGIN_NAME    = 'InfoWidgets';
 	const PLUGIN_AUTHOR  = 'Chris92 & TheM & Kremsy';
 
@@ -1003,11 +1003,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 	 * @param $class
 	 * @param $settingName
 	 */
-	public function handleSettingChanged($class, $settingName) {
-        if(!$class = get_class()){
-            return;
-        }
-        
+	public function handleSettingChanged(\ManiaControl\Settings\Setting $setting) {
         $settings = array('WidgetPlugin.MapWidget',
                           'Map-Widget Activated',
                           'Map-Widget-Position: X',
@@ -1038,7 +1034,7 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 			              'KarmaWidget-Size: Width',
 			              'KarmaWidget-Size: Height');
 
-        if (in_array($settingName, $settings)){
+        if (in_array($setting->setting, $settings)){
             $this->displayWidgets();
         }
     }

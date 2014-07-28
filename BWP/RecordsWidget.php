@@ -32,7 +32,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.171;
+    const PLUGIN_VERSION = 1.172;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -224,11 +224,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         $this->updateAllManialinks();
     }
 
-	public function handleSettingChanged($class, $settingName) {
-		if (!$class = get_class()) {
-			return;
-		}
-
+	public function handleSettingChanged(\ManiaControl\Settings\Setting $setting) {
 		$settings = array('RecordsWidget.LocalRecords',
 						  'Local Records Widget - Width',
 						  'Local Records Widget - Line Height',
@@ -250,7 +246,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 						  'Dedi Records Widget - # of shown top records',
 						  'Use Dedi Records Widget');
 
-		if (in_array($settingName, $settings)) {
+		if (in_array($setting->setting, $settings)) {
 			$this->updateAllManialinks();
 		}
 	}
