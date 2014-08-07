@@ -32,7 +32,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.173;
+    const PLUGIN_VERSION = 1.174;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -89,6 +89,8 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 	 * @return bool
 	 */
     public function load(ManiaControl $maniaControl) {
+        $this->maniaControl = $maniaControl;
+
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_ENABLE, true);
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_TITLE, 'Local Records');
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_POSX, 139);
