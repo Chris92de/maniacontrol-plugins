@@ -32,7 +32,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
      * Constants
      */
     const PLUGIN_ID = 32; //register plugin here to receive ID: http://maniacontrol.com/user/plugins/new
-    const PLUGIN_VERSION = 1.172;
+    const PLUGIN_VERSION = 1.173;
     const PLUGIN_NAME = 'RecordsWidget';
     const PLUGIN_AUTHOR = 'Chris92 & TheM';
     const PLUGIN_DESC = 'Replaces default widgets for Local Records & Dedimania with more powerful ones.';
@@ -89,12 +89,6 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 	 * @return bool
 	 */
     public function load(ManiaControl $maniaControl) {
-        $this->maniaControl = $maniaControl;
-        if(!$this->maniaControl->pluginManager->isPluginActive('MCTeam\LocalRecordsPlugin')) {
-            $errormsg = '[RecordsWidget] This plugin requires the plugin "Local Records" to be activated to function properly. Please enable it.';
-            throw new \Exception($errormsg);
-        }
-
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_ENABLE, true);
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_TITLE, 'Local Records');
         $this->maniaControl->settingManager->initSetting($this, self::SETTING_LOCALS_POSX, 139);
@@ -287,6 +281,7 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 		} else {
 			/** @var \LocalRecordsPlugin $localRecordsPlugin */
 			$localRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\LocalRecordsPlugin');
+			if(!$localRecordsPlugin) return;
 
 			$title        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_TITLE);
 			$pos_x        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_LOCALS_POSX);
