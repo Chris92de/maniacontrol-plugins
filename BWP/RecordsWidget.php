@@ -14,6 +14,7 @@ use ManiaControl\ManiaControl;
 use ManiaControl\Plugins\Plugin;
 use ManiaControl\Callbacks\CallbackListener;
 use ManiaControl\Callbacks\TimerListener;
+use ManiaControl\Plugins\PluginManager;
 use ManiaControl\Utils\Formatter;
 use ManiaControl\Maps\Map;
 use ManiaControl\Maps\MapManager;
@@ -117,12 +118,23 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         $this->maniaControl->callbackManager->registerCallbackListener(PlayerManager::CB_PLAYERDISCONNECT, $this, 'handlePlayerDisconnect');
         $this->maniaControl->callbackManager->registerCallbackListener(SettingManager::CB_SETTING_CHANGED, $this, 'handleSettingChanged');
 
-		$this->drawOnLoad();
+		$localRecordsPlugin = $this->maniaControl->pluginManager->getPlugin('MCTeam\LocalRecordsPlugin');
+		if($localRecordsPlugin) {
+			$this->drawOnLoad();
+		} else {
+			$this->maniaControl->callbackManager->registerCallbackListener(PluginManager::CB_PLUGIN_LOADED, $this, 'handlePluginLoaded');
+		}
     }
     
     public function unload() {
 
     }
+
+	public function handlePluginLoaded($pluginClass, $plugin) {
+		if($pluginClass == 'MCTeam\LocalRecordsPlugin') {
+			$this->drawOnLoad();
+		}
+	}
 
 	public function handleLocalRecord($newRecord) {
 		$this->blinkRecord = $newRecord;
