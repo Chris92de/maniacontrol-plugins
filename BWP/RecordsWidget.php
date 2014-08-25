@@ -16,8 +16,6 @@ use ManiaControl\Callbacks\CallbackListener;
 use ManiaControl\Callbacks\TimerListener;
 use ManiaControl\Plugins\PluginManager;
 use ManiaControl\Utils\Formatter;
-use ManiaControl\Maps\Map;
-use ManiaControl\Maps\MapManager;
 use ManiaControl\Settings\SettingManager;
 use ManiaControl\Players\PlayerManager;
 use ManiaControl\Players\Player;
@@ -357,7 +355,6 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 		$topBackgroundQuad = new Quad();
 		$frame->add($topBackgroundQuad);
 		$topBackgroundQuad->setVAlign(Control::TOP);
-		$adjustOuterBorder = false;
 		$height            = ($topcount * $lineHeight)+1;
 		$topBackgroundQuad->setSize($width * 1.2, $height);
 		$topBackgroundQuad->setY(-5.5);
@@ -416,8 +413,6 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 				$start = $topcount;
 				$end = ($numberOfRecords < $needRecords) ? $numberOfRecords : ($start + $needRecords);
 			} else { // Player doesn't have a record in the TOP X
-				$recordsBelow = $numberOfRecords-$playerHasRecord->rank;
-				$recordsAbove = $numberOfRecords-$topcount-1;
 				$halfNeededBelow = floor(($needRecords-1)/2);
 				$halfNeededAbove = ceil(($needRecords-1)/2);
 
@@ -428,7 +423,6 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
 					$start = $playerHasRecord->rank-$halfNeededAbove-1;
 
 					if(!isset($records[$playerHasRecord->rank+$halfNeededBelow-1])) { // Not enough records below
-						//$tooLess = count($records)-($playerHasRecord->rank+$halfNeededBelow);
 						$haveBelow = count($records)-$playerHasRecord->rank;
 						$tooLess = ($lines-$topcount)-$halfNeededAbove-$haveBelow;
 						if($tooLess <= $possibleExtraAbove) {
@@ -608,4 +602,3 @@ class RecordsWidget implements Plugin, CallbackListener, TimerListener {
         return self::PLUGIN_DESC;
     }
 }
-?>

@@ -16,7 +16,6 @@ use ManiaControl\Utils\Formatter;
 use ManiaControl\ManiaControl;
 use ManiaControl\Manialinks\IconManager;
 use ManiaControl\Maps\Map;
-use ManiaControl\Maps\MapManager;
 use ManiaControl\Players\Player;
 use ManiaControl\Players\PlayerManager;
 use ManiaControl\Plugins\Plugin;
@@ -197,8 +196,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_POSY);
 		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_WIDTH);
 		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_MAP_WIDGET_HEIGHT);
-		$quadStyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
-		$quadSubstyle = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
 		$labelStyle   = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
 
 		$maniaLink = new ManiaLink(self::MLID_MAPWIDGET);
@@ -215,7 +212,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$backgroundQuad = new Quad();
 		$frame->add($backgroundQuad);
 		$backgroundQuad->setSize($width, $height);
-		//$backgroundQuad->setStyles($quadStyle, $quadSubstyle);
 		$backgroundQuad->setStyles('Bgs1InRace', 'BgList');
 		$backgroundQuad->addMapInfoFeature();
 
@@ -242,7 +238,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$titleIcon = new Quad_Icons128x128_1();
 		$frame->add($titleIcon);
 		$titleIcon->setSize(5, 5);
-		//$posX = ($leftSide) ? 20.5 : -20.5;
 		$titleIcon->setPosition(-20.5, 5.5, 3);
 		$titleIcon->setZ(3);
 		$titleIcon->setSubStyle($titleIcon::SUBSTYLE_NewTrack);
@@ -264,7 +259,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$titleIcon = new Quad_Icons128x128_1();
 		$frame->add($titleIcon);
 		$titleIcon->setSize(3, 3);
-		//$posX = ($leftSide) ? 20.5 : -20.5;
 		$titleIcon->setPosition(-20.4, -1.8, 3);
 		$titleIcon->setZ(3);
 		$titleIcon->setSubStyle($titleIcon::SUBSTYLE_Hotseat);
@@ -284,7 +278,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$timeIcon = new Quad_Icons64x64_1();
 		$frame->add($timeIcon);
 		$timeIcon->setSize(5, 5);
-		//$posX = ($leftSide) ? 20.5 : -20.5;
 		$timeIcon->setPosition(-20.5, -5, 3);
 		$timeIcon->setZ(3);
 		$timeIcon->setSubStyle($timeIcon::SUBSTYLE_FinishGrey);
@@ -305,7 +298,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 			$timeIcon = new Quad_Icons128x128_1();
 			$frame->add($timeIcon);
 			$timeIcon->setSize(3, 3);
-			//$posX = ($leftSide) ? 20.5 : -20.5;
 			$timeIcon->setPosition(3, -5.2, 3);
 			$timeIcon->setZ(3);
 			$timeIcon->setSubStyle($timeIcon::SUBSTYLE_United);
@@ -348,11 +340,8 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$pos_y        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_POSY);
 		$width        = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_WIDTH);
 		$height       = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_CLOCK_WIDGET_HEIGHT);
-		$quadStyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
-		$quadSubstyle = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
 
 		$maniaLink = new ManiaLink(self::MLID_CLOCKWIDGET);
-		$script    = $maniaLink->getScript();
 
 		// mainframe
 		$frame = new Frame();
@@ -391,8 +380,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$pos_y           = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_POSY);
 		$width           = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_WIDTH);
 		$height          = $this->maniaControl->settingManager->getSettingValue($this, self::SETTING_SERVERINFO_WIDGET_HEIGHT);
-		$quadStyle       = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadStyle();
-		$quadSubstyle    = $this->maniaControl->manialinkManager->styleManager->getDefaultQuadSubstyle();
         $labelStyle      = $this->maniaControl->manialinkManager->styleManager->getDefaultLabelStyle();
         $serverLadderMin = $this->maniaControl->client->getServerOptions()->ladderServerLimitMin;
         $serverLadderMax = $this->maniaControl->client->getServerOptions()->ladderServerLimitMax;
@@ -465,7 +452,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$label->setTextSize(1.3);
 		$label->setText(Formatter::stripDirtyCodes($serverName));
 		$label->setTextColor("FFF");
-		//$label->setAutoNewLine(true);
 		// Player Quad / Label
 
 		$label = new Label_Text();
@@ -617,7 +603,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$titleIcon->setZ(3);
 		$titleIcon->setSubStyle($titleIcon::SUBSTYLE_Statistics);
 
-		$karma = $karmaPlugin->getMapKarma($this->maniaControl->mapManager->getCurrentMap());
 		$votes = $karmaPlugin->getMapVotes($this->maniaControl->mapManager->getCurrentMap());
 		$blocks = array();
 		$x = -12.75;
@@ -639,7 +624,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 			}
 		}
 		$endKarma = $plus-$min;
-		//$percent = round($karma * 100.);
 		if($votes['count'] != 0 && ($votes['count']-$dontCount) != 0) {
 			$percent = round(($plus/($votes['count']-$dontCount)) * 100.);
 		} else {
@@ -781,7 +765,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$actionId    = $callback[1][2];
 
 		$login  = $callback[1][1];
-		$player = $this->maniaControl->playerManager->getPlayer($login);
 
 		if($actionId == 'KarmaWidget.SetVote.Min' || $actionId == 'KarmaWidget.SetVote.Plus') {
 			$chatCallback = array();
@@ -890,7 +873,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 		$titleIcon = new Quad_Icons128x128_1();
 		$frame->add($titleIcon);
 		$titleIcon->setSize(5, 5);
-		//$posX = ($leftSide) ? 20.5 : -20.5;
 		$titleIcon->setPosition(-19.5, 3.75, 3);
 		$titleIcon->setZ(3);
 		$titleIcon->setSubStyle($titleIcon::SUBSTYLE_NewTrack);
@@ -929,7 +911,6 @@ class InfoWidgets implements CallbackListener, TimerListener, Plugin {
 			$timeIcon = new Quad_Icons128x128_1();
 			$frame->add($timeIcon);
 			$timeIcon->setSize(3, 3);
-			//$posX = ($leftSide) ? 20.5 : -20.5;
 			$timeIcon->setPosition(8, -3.75, 3);
 			$timeIcon->setZ(3);
 			$timeIcon->setSubStyle($timeIcon::SUBSTYLE_United);
